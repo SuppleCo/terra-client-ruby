@@ -71,6 +71,25 @@ module TerraAPI
             )
         end
 
+        def authenticate_user(
+            resource,
+            reference_id: nil,
+            language: nil,
+            auth_success_redirect_url: nil,
+            auth_failure_redirect_url: nil
+        )
+            return GWS::authenticate_user(
+                @dev_id,
+                @api_key,
+                @api_path,
+                resource,
+                reference_id: reference_id,
+                language: language,
+                auth_success_redirect_url: auth_success_redirect_url,
+                auth_failure_redirect_url: auth_failure_redirect_url
+            )
+        end
+
         def get_providers()
             return Provider::get_providers(@dev_id, @api_key, @api_path)
         end

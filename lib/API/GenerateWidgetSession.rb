@@ -60,4 +60,43 @@ module GWS
                 raise TerraError.new(res)
         end
     end
+
+    def self.authenticate_user(
+        dev_id,
+        api_key,
+        api_path,
+        resource,
+        reference_id: nil,
+        language: nil,
+        auth_success_redirect_url: nil,
+        auth_failure_redirect_url: nil
+    )
+        data = {}
+        data["reference_id"] = reference_id if reference_id
+        data["language"] = language if language
+        data["auth_success_redirect_url"] = auth_success_redirect_url if auth_success_redirect_url
+        data["auth_failure_redirect_url"] = auth_failure_redirect_url if auth_failure_redirect_url
+
+        options = {
+            "headers" => {
+              "X-API-Key" => api_key,
+              "dev-id" => dev_id,
+              "Content-Type" => "application/json",
+            }
+        }
+
+        res = HTTParty.post(
+            "#{api_path}/auth/authenticateUser?resource=#{resource}", 
+            :headers=>options["headers"], 
+            :body=>data.to_json
+        )
+        
+        body = JSON.parse(res.body)
+        case body["status"]
+            when "success"
+                return TerraResponse::parseBody(res)
+            else
+                raise TerraError.new(res)
+        end
+    end
 end
