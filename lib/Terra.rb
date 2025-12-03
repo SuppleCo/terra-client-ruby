@@ -115,6 +115,10 @@ module TerraAPI
             return get_data("nutrition", user_id, start_date, end_date, to_webhook)
         end
 
+        def get_planned_workouts(user_id, start_date, end_date=nil, to_webhook=false)
+            return get_data("plannedWorkout", user_id, start_date, end_date, to_webhook)
+        end
+
         def parse_webhook(payload, type, user_id=nil)
             return TerraWebhook.new(playload, type, user_id)
         end
