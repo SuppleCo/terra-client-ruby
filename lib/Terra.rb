@@ -159,6 +159,10 @@ module TerraAPI
             return TerraWrite::post_data("body", @dev_id, @api_key, @api_path, user_id, data)
         end
 
+        def post_planned_workout(user_id, data)
+            return TerraWrite::post_data("plannedWorkout", @dev_id, @api_key, @api_path, user_id, data)
+        end
+
         def delete_nutrition(user_id, ids)
             return TerraWrite::delete_data("nutrition", @dev_id, @api_key, @api_path, user_id, ids)
         end
