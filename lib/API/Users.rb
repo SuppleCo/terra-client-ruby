@@ -13,6 +13,7 @@
 #  limitations under the License.
 
 require 'httparty'
+require 'json'
 require 'API/TerraError'
 require 'API/TerraResponse'
 
@@ -51,6 +52,29 @@ module Users
         res = HTTParty.get(
             "#{api_path}/userInfo?reference_id=#{reference_id}", 
             :headers=>options["headers"]
+        )
+
+        case res.code
+            when 200
+                return TerraResponse::parseBody(res)
+            when 400...600
+                raise TerraError.new(res)
+        end
+    end
+
+    def self.get_users_bulk(dev_id, api_key, api_path, user_ids)
+        options = {
+            "headers" => {
+                "X-API-Key" => api_key,
+                "dev-id" => dev_id,
+                "Content-Type" => "application/json",
+            },
+        }
+
+        res = HTTParty.post(
+            "#{api_path}/userInfo",
+            :headers => options["headers"],
+            :body => { "user_ids" => user_ids }.to_json
         )
 
         case res.code
