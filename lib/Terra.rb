@@ -189,7 +189,7 @@ module TerraAPI
         end
 
         def parse_webhook(payload, type, user_id=nil)
-            return TerraWebhook.new(playload, type, user_id)
+            return TerraWebhook.new(payload, type, user_id)
         end
     end
 end
