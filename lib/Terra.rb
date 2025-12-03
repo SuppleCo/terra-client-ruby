@@ -100,7 +100,7 @@ module TerraAPI
         end
 
         def get_body(user_id, start_date, end_date=nil, to_webhook=false)
-            return get_data("body", start_date, end_date, to_webhook)
+            return get_data("body", user_id, start_date, end_date, to_webhook)
         end
 
         def get_sleep(user_id, start_date, end_date=nil, to_webhook=false)
@@ -109,6 +109,10 @@ module TerraAPI
 
         def get_menstruation(user_id, start_date, end_date=nil, to_webhook=false)
             return get_data("menstruation", user_id, start_date, end_date, to_webhook)
+        end
+
+        def get_nutrition(user_id, start_date, end_date=nil, to_webhook=false)
+            return get_data("nutrition", user_id, start_date, end_date, to_webhook)
         end
 
         def parse_webhook(payload, type, user_id=nil)
