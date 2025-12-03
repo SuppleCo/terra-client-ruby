@@ -14,6 +14,6 @@
 
 module Helpers
     def self.GetTerraDate(d)
-        return "#{d.year}-#{d.month}-#{d.day}" 
+        return d.strftime('%Y-%m-%d')
     end
 end

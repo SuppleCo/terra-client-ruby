@@ -1,6 +1,27 @@
+require 'date'
 require 'Terra'
 require 'rspec/autorun'
 require 'API/Providers'
+require 'API/Helpers'
+
+describe Helpers do
+    describe ".GetTerraDate" do
+        it "returns date in YYYY-MM-DD format with zero-padded month and day" do
+            date = Date.new(2023, 3, 9)
+            expect(Helpers.GetTerraDate(date)).to eq("2023-03-09")
+        end
+
+        it "handles double-digit months and days correctly" do
+            date = Date.new(2023, 12, 25)
+            expect(Helpers.GetTerraDate(date)).to eq("2023-12-25")
+        end
+
+        it "handles single-digit month with double-digit day" do
+            date = Date.new(2023, 1, 15)
+            expect(Helpers.GetTerraDate(date)).to eq("2023-01-15")
+        end
+    end
+end
 
 describe TerraAPI::Terra do 
     describe "#getProviders" do
