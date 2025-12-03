@@ -39,6 +39,28 @@ module Users
         end
     end
 
+    def self.get_users_by_reference(dev_id, api_key, api_path, reference_id)
+        options = {
+            "headers" => {
+                "X-API-Key" => api_key,
+                "dev-id" => dev_id,
+                "Content-Type" => "application/json",
+            },
+        }
+
+        res = HTTParty.get(
+            "#{api_path}/userInfo?reference_id=#{reference_id}", 
+            :headers=>options["headers"]
+        )
+
+        case res.code
+            when 200
+                return TerraResponse::parseBody(res)
+            when 400...600
+                raise TerraError.new(res)
+        end
+    end
+
     def self.deauth_user(dev_id, api_key, api_path, user_id)
         options = {
             "headers" => {

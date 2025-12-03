@@ -112,6 +112,10 @@ module TerraAPI
             return Users::get_user(@dev_id, @api_key, @api_path, user_id)
         end
 
+        def get_users_by_reference(reference_id)
+            return Users::get_users_by_reference(@dev_id, @api_key, @api_path, reference_id)
+        end
+
         def deauth_user(user_id)
             return Users::deauth_user(@dev_id, @api_key, @api_path, user_id)
         end
