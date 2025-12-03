@@ -159,6 +159,18 @@ module TerraAPI
             return TerraWrite::post_data("body", @dev_id, @api_key, @api_path, user_id, data)
         end
 
+        def delete_nutrition(user_id, ids)
+            return TerraWrite::delete_data("nutrition", @dev_id, @api_key, @api_path, user_id, ids)
+        end
+
+        def delete_body(user_id, ids)
+            return TerraWrite::delete_data("body", @dev_id, @api_key, @api_path, user_id, ids)
+        end
+
+        def delete_planned_workouts(user_id, ids)
+            return TerraWrite::delete_data("plannedWorkout", @dev_id, @api_key, @api_path, user_id, ids)
+        end
+
         def parse_webhook(payload, type, user_id=nil)
             return TerraWebhook.new(playload, type, user_id)
         end

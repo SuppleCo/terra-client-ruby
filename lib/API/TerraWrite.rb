@@ -40,5 +40,32 @@ module TerraWrite
                 raise TerraError.new(res)
         end
     end
+
+    def self.delete_data(type, dev_id, api_key, api_path, user_id, ids)
+        options = {
+            "headers" => {
+                "X-API-Key" => api_key,
+                "dev-id" => dev_id,
+                "Content-Type" => "application/json",
+            },
+        }
+
+        # API inconsistency: /body uses "log_ids", others use "data"
+        body_key = type == "body" ? "log_ids" : "data"
+        body = { body_key => ids }
+
+        res = HTTParty.delete(
+            "#{api_path}/#{type}?user_id=#{user_id}",
+            :headers => options["headers"],
+            :body => body.to_json
+        )
+
+        case res.code
+            when 200, 207
+                return TerraResponse::parseBody(res)
+            when 400...600
+                raise TerraError.new(res)
+        end
+    end
 end
 
