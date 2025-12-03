@@ -90,6 +90,10 @@ module TerraAPI
             )
         end
 
+        def generate_auth_token()
+            return GWS::generate_auth_token(@dev_id, @api_key, @api_path)
+        end
+
         def get_providers()
             return Provider::get_providers(@dev_id, @api_key, @api_path)
         end

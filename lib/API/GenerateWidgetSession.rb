@@ -99,4 +99,27 @@ module GWS
                 raise TerraError.new(res)
         end
     end
+
+    def self.generate_auth_token(dev_id, api_key, api_path)
+        options = {
+            "headers" => {
+              "X-API-Key" => api_key,
+              "dev-id" => dev_id,
+              "Content-Type" => "application/json",
+            }
+        }
+
+        res = HTTParty.post(
+            "#{api_path}/auth/generateAuthToken", 
+            :headers=>options["headers"]
+        )
+        
+        body = JSON.parse(res.body)
+        case body["status"]
+            when "success"
+                return TerraResponse::parseBody(res)
+            else
+                raise TerraError.new(res)
+        end
+    end
 end
