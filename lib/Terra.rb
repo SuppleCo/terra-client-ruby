@@ -20,6 +20,7 @@ require "API/Subscribers"
 require "API/Users"
 require "API/TerraData"
 require "API/TerraWrite"
+require "API/LabReports"
 require "API/Helpers"
 require "API/TerraWebhook"
 
@@ -173,6 +174,10 @@ module TerraAPI
 
         def delete_planned_workouts(user_id, ids)
             return TerraWrite::delete_data("plannedWorkout", @dev_id, @api_key, @api_path, user_id, ids)
+        end
+
+        def upload_lab_report(files, reference_id: nil)
+            return LabReports::upload(@dev_id, @api_key, @api_path, files, reference_id: reference_id)
         end
 
         def parse_webhook(payload, type, user_id=nil)
