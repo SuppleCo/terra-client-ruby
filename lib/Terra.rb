@@ -75,6 +75,10 @@ module TerraAPI
             return Provider::get_providers(@dev_id, @api_key, @api_path)
         end
 
+        def get_providers_detailed(sdk=false)
+            return Provider::get_providers_detailed(@dev_id, @api_key, @api_path, sdk)
+        end
+
         def get_subscribers()
             return Subscribers::get_subscribers(@dev_id, @api_key, @api_path)
         end

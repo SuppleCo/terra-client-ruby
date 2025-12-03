@@ -37,4 +37,25 @@ module Provider
                 raise TerraError.new(res)
         end
     end
+
+    def self.get_providers_detailed(dev_id, api_key, api_path, sdk=false)
+        options = {
+            "headers" => {
+                "X-API-Key" => api_key,
+                "dev-id" => dev_id,
+                "Content-Type" => "application/json",
+            },
+        }
+
+        url = "#{api_path}/integrations/detailed"
+        url += "?sdk=true" if sdk
+
+        res = HTTParty.get(url, :headers=>options["headers"])
+        case res.code
+            when 200
+                return TerraResponse::parseBody(res)
+            when 400...600
+                raise TerraError.new(res)
+        end
+    end
 end
