@@ -19,6 +19,7 @@ require "API/Providers"
 require "API/Subscribers"
 require "API/Users"
 require "API/TerraData"
+require "API/TerraWrite"
 require "API/Helpers"
 require "API/TerraWebhook"
 
@@ -144,6 +145,18 @@ module TerraAPI
 
         def get_planned_workouts(user_id, start_date, end_date=nil, to_webhook=false)
             return get_data("plannedWorkout", user_id, start_date, end_date, to_webhook)
+        end
+
+        def post_activity(user_id, data)
+            return TerraWrite::post_data("activity", @dev_id, @api_key, @api_path, user_id, data)
+        end
+
+        def post_nutrition(user_id, data)
+            return TerraWrite::post_data("nutrition", @dev_id, @api_key, @api_path, user_id, data)
+        end
+
+        def post_body(user_id, data)
+            return TerraWrite::post_data("body", @dev_id, @api_key, @api_path, user_id, data)
         end
 
         def parse_webhook(payload, type, user_id=nil)
